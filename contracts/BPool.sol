@@ -237,8 +237,8 @@ contract BPool is BBronze, BToken, BMath {
         public
         _logs_
         _lock_
-        _onlyController_
     {
+        require(msg.sender == _controller, "ERR_NOT_CONTROLLER");
         require(!_finalized, "ERR_IS_FINALIZED");
         require(_tokens.length >= MIN_BOUND_TOKENS, "ERR_MIN_TOKENS");
 
@@ -342,7 +342,6 @@ contract BPool is BBronze, BToken, BMath {
     }
 
     // Absorb any tokens that have been sent to this contract into the pool
-    // @TODO Convert to drain instead
     function gulp(address token)
         external
         _logs_
